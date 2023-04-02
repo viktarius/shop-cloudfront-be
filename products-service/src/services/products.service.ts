@@ -1,4 +1,6 @@
-const products = [
+import { IProduct } from './product.model';
+
+const products: IProduct[] = [
     {
         "count": 4,
         "description": "You will get a random laptop in price from $100 to $1000",
@@ -73,8 +75,8 @@ const products = [
     }
 ]
 
-export class ProductsService {
-    async getProducts() {
+class ProductsService {
+    getProducts(): Promise<IProduct[]> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(products)
@@ -82,7 +84,7 @@ export class ProductsService {
         })
     }
 
-    async getProductById(productId) {
+    getProductById(productId): Promise<IProduct> {
         const product = products.find(({ id }) => productId === id);
 
         return new Promise((resolve) => {
