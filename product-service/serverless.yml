@@ -27,6 +27,13 @@ provider:
   region: us-east-1
   profile: Viktar_Belski
 
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js' # Name of webpack configuration file
+
 # you can add packaging information here
 #package:
 #  patterns:

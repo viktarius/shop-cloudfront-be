@@ -1,15 +1,13 @@
-'use strict';
-const getProducts = require("./products");
+import ProductsService from "./src/services/products.service";
 
-module.exports.handler = async (event) => {
+export const handler = async (event) => {
     const { id } = event.pathParameters;
-    const products = await getProducts();
-    const product = products.find(pr => pr.id === id);
+    const product = await ProductsService.getProductById(id);
 
     if (!product) {
         return {
             statusCode: 404,
-            message: 'Product not found!'
+            body: 'Product not found!'
         }
     }
 

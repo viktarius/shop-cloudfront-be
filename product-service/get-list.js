@@ -1,8 +1,7 @@
-'use strict';
-const getProducts = require("./products");
+import ProductsService from "./src/services/products.service";
 
-module.exports.handler = async () => {
-    const products = await getProducts();
+export const handler = async () => {
+    const products = await ProductsService.getProducts();
 
     return {
         statusCode: 200,
