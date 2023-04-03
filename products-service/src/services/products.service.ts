@@ -76,7 +76,7 @@ const products: IProduct[] = [
 ]
 
 class ProductsService {
-    getProducts(): Promise<IProduct[]> {
+    getList(): Promise<IProduct[]> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(products)
@@ -84,8 +84,8 @@ class ProductsService {
         })
     }
 
-    getProductById(productId): Promise<IProduct> {
-        const product = products.find(({ id }) => productId === id);
+    getItemById(productId: string): Promise<IProduct> {
+        const product: IProduct = products.find(({ id }) => productId === id);
 
         return new Promise((resolve) => {
             setTimeout(() => {

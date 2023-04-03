@@ -3,7 +3,7 @@ import { formatJSONResponse } from '@libs/api-gateway';
 
 import ProductsService from '../../services/products.service';
 
-export const getProducts: ValidatedEventAPIGatewayProxyEvent<null> = async () => {
-    const products = await ProductsService.getProducts();
+export const getProducts: ValidatedEventAPIGatewayProxyEvent<any> = async () => {
+    const products = await ProductsService.getList();
     return formatJSONResponse(products);
 };

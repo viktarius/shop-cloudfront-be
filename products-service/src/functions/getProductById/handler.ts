@@ -3,9 +3,9 @@ import { formatJSONResponse } from '@libs/api-gateway';
 
 import ProductsService from '../../services/products.service';
 
-export const getProductById: ValidatedEventAPIGatewayProxyEvent<null> = async (event) => {
+export const getProductById: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
     const { id } = event.pathParameters;
-    const product = await ProductsService.getProductById(id);
+    const product = await ProductsService.getItemById(id);
     if (product) {
         return formatJSONResponse( product);
     }

@@ -13,4 +13,4 @@
 - getProducts - https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/products
 - getProductById - https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/products/7567ec4b-b10c-48c5-9345-fc73c48a80a1
 - SWAGGER: https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/swagger
-- FE: 
+- FE: https://d17hlkvoaz74v8.cloudfront.net/
