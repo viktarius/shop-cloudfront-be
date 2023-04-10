@@ -20,7 +20,24 @@ const serverlessConfiguration: AWS = {
     },
     region: 'us-east-1',
     profile: 'Viktar_Belski',
-    stage: 'v2'
+    stage: 'v2',
+    iam: {
+      role: {
+        statements: [{
+          Effect: "Allow",
+          Action: [
+            "dynamodb:DescribeTable",
+            "dynamodb:Query",
+            "dynamodb:Scan",
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+          ],
+          Resource: 'arn:aws:dynamodb:us-east-1:*:*'
+        }]
+      }
+    }
   },
   // import the function via paths
   functions: { getProducts, getProductById },
@@ -34,6 +51,7 @@ const serverlessConfiguration: AWS = {
     },
     autoswagger:{
       apiType: 'http',
+      generateSwaggerOnDeploy: false,
     },
     esbuild: {
       bundle: true,

@@ -5,9 +5,15 @@ import ProductsService from '../../services/products.service';
 
 export const getProductById: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
     const { id } = event.pathParameters;
-    const product = await ProductsService.getItemById(id);
-    if (product) {
-        return formatJSONResponse( product);
+    try {
+        const result = await ProductsService.getItemById(id);
+        if (result?.id) {
+            return formatJSONResponse(result);
+        } else {
+            return formatJSONResponse({ message: `Product with id: ${ id } not found!` }, 404);
+        }
+    } catch (e) {
+        console.log('ERROR: ', e);
+        return formatJSONResponse({message: e.message}, 500);
     }
-    return formatJSONResponse({ message: `Product with id: ${id} not found!` }, 404);
 };
