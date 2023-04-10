@@ -7,5 +7,5 @@ export interface IProduct {
     title: string;
 }
 
-export type TCreateProductBody = Omit<IProduct, 'id' | 'count'>;
+export type TCreateProductBody = Omit<IProduct, 'id'>;
 

@@ -50,22 +50,32 @@ class ProductsService {
             throw new BadRequest('Invalid data');
         } else {
             const id: string = uuidv4();
-            const productCreateParam = {
-                TableName: 'products',
-                Item: { id, ...body }
+            const productParams = {
+                id,
+                price: body.price,
+                title: body.title,
+                description: body.description,
             }
-            return this.documentClient.put(productCreateParam).promise()
+            const stockParams = {
+                product_id: id,
+                count: body.count
+            };
+
+            return this.documentClient.transactWrite({
+                TransactItems: [
+                    { Put: { TableName: 'products', Item: productParams } },
+                    { Put: { TableName: 'stocks', Item: stockParams } },
+                ]
+            }).promise();
         }
     }
 
     private createBodyValidator(body: TCreateProductBody): boolean {
         type TValidatorKeys = (keyof TCreateProductBody)[];
-        const requiredKeys: TValidatorKeys = ['title', 'description', 'price', 'imagePath'];
+        const requiredKeys: TValidatorKeys = ['title', 'description', 'price', 'imagePath', 'count'];
         const bodyKeys: TValidatorKeys = Object.keys(body) as TValidatorKeys;
         return requiredKeys.length === bodyKeys.length && bodyKeys.every((key) => requiredKeys.includes(key))
     }
 }
 
-const productsService = new ProductsService();
-
-export default productsService;
+export const productsService = new ProductsService();

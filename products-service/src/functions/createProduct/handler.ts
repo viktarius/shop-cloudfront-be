@@ -1,16 +1,18 @@
 import { formatJSONResponse, ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { BadRequest } from '@libs/bad-request';
 
-import ProductsService from '../../services/products.service';
+import { productsService } from '../../services/products.service';
 import { TCreateProductBody } from '../../services/product.model';
+import { loggerService } from '../../services/logger.service';
 
 export const createProduct: ValidatedEventAPIGatewayProxyEvent<{ body: TCreateProductBody }> = async (event: { body: any }) => {
     const body = JSON.parse(event.body);
+    loggerService.log('lambda -->> createProduct -->> requests and arguments: ', event);
     try {
-        const result = await ProductsService.createProduct(body);
+        const result = await productsService.createProduct(body);
         return formatJSONResponse({ result });
     } catch (e) {
-        console.log('ERROR: ', e);
+        loggerService.logError('lambda -->> createProduct', e);
         if (e instanceof BadRequest) {
             return formatJSONResponse({ message: e.message }, e.statusCode);
         }
