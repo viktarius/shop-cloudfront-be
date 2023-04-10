@@ -1,10 +1,13 @@
 import { DynamoDB } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
+import { v4 as uuidv4 } from 'uuid';
 
-import { IProduct } from './product.model';
+import { IProduct, TCreateProductBody } from './product.model';
+import { BadRequest } from '@libs/bad-request';
 
 class ProductsService {
     private documentClient: DocumentClient;
+
     constructor() {
         this.documentClient = new DynamoDB.DocumentClient();
     }
@@ -39,6 +42,27 @@ class ProductsService {
             ...products.Items[0],
             count: stocks.Items[0]?.count || 0
         } as IProduct;
+    }
+
+    async createProduct(body: TCreateProductBody): Promise<any> | never {
+        const hasAllProperty: boolean = this.createBodyValidator(body);
+        if (!hasAllProperty) {
+            throw new BadRequest('Invalid data');
+        } else {
+            const id: string = uuidv4();
+            const productCreateParam = {
+                TableName: 'products',
+                Item: { id, ...body }
+            }
+            return this.documentClient.put(productCreateParam).promise()
+        }
+    }
+
+    private createBodyValidator(body: TCreateProductBody): boolean {
+        type TValidatorKeys = (keyof TCreateProductBody)[];
+        const requiredKeys: TValidatorKeys = ['title', 'description', 'price', 'imagePath'];
+        const bodyKeys: TValidatorKeys = Object.keys(body) as TValidatorKeys;
+        return requiredKeys.length === bodyKeys.length && bodyKeys.every((key) => requiredKeys.includes(key))
     }
 }
 

@@ -14,6 +14,6 @@ export const getProductById: ValidatedEventAPIGatewayProxyEvent<any> = async (ev
         }
     } catch (e) {
         console.log('ERROR: ', e);
-        return formatJSONResponse({message: e.message}, 500);
+        return formatJSONResponse({ message: e.message }, 500);
     }
 };

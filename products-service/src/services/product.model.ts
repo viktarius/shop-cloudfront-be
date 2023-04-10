@@ -6,3 +6,6 @@ export interface IProduct {
     imagePath: string;
     title: string;
 }
+
+export type TCreateProductBody = Omit<IProduct, 'id' | 'count'>;
+
