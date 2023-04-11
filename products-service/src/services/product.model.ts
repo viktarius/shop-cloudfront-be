@@ -7,5 +7,16 @@ export interface IProduct {
     title: string;
 }
 
-export type TCreateProductBody = Omit<IProduct, 'id'>;
+export interface ICreateProductBody {
+    count: number;
+    description: string;
+    price: number;
+    imagePath?: string;
+    title: string;
+}
 
+/*
+*   SWAGGER TYPES
+*/
+
+export type TProductList = IProduct[];

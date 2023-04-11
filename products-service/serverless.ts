@@ -52,7 +52,8 @@ const serverlessConfiguration: AWS = {
     },
     autoswagger:{
       apiType: 'http',
-      generateSwaggerOnDeploy: false,
+      generateSwaggerOnDeploy: true,
+      typefiles: ['./src/services/product.model.ts']
     },
     esbuild: {
       bundle: true,

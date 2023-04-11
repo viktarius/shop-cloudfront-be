@@ -9,7 +9,8 @@ export default {
                 path: 'products',
                 cors: true,
                 summary: "Create product",
-                swaggerTags: ['Products']
+                swaggerTags: ['Products'],
+                bodyType: 'ICreateProductBody',
             },
         },
     ],

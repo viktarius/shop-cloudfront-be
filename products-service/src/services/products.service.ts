@@ -2,7 +2,7 @@ import { DynamoDB } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
 import { v4 as uuidv4 } from 'uuid';
 
-import { IProduct, TCreateProductBody } from './product.model';
+import { IProduct, ICreateProductBody } from './product.model';
 import { BadRequest } from '@libs/bad-request';
 
 class ProductsService {
@@ -44,7 +44,7 @@ class ProductsService {
         } as IProduct;
     }
 
-    async createProduct(body: TCreateProductBody): Promise<any> | never {
+    async createProduct(body: ICreateProductBody): Promise<any> | never {
         const hasAllProperty: boolean = this.createBodyValidator(body);
         if (!hasAllProperty) {
             throw new BadRequest('Invalid data');
@@ -70,11 +70,11 @@ class ProductsService {
         }
     }
 
-    private createBodyValidator(body: TCreateProductBody): boolean {
-        type TValidatorKeys = (keyof TCreateProductBody)[];
-        const requiredKeys: TValidatorKeys = ['title', 'description', 'price', 'imagePath', 'count'];
+    private createBodyValidator(body: ICreateProductBody): boolean {
+        type TValidatorKeys = (keyof ICreateProductBody)[];
+        const requiredKeys: TValidatorKeys = ['title', 'description', 'price', 'count'];
         const bodyKeys: TValidatorKeys = Object.keys(body) as TValidatorKeys;
-        return requiredKeys.length === bodyKeys.length && bodyKeys.every((key) => requiredKeys.includes(key))
+        return requiredKeys.every((key) => bodyKeys.includes(key))
     }
 }
 

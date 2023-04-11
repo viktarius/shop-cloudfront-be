@@ -2,10 +2,10 @@ import { formatJSONResponse, ValidatedEventAPIGatewayProxyEvent } from '@libs/ap
 import { BadRequest } from '@libs/bad-request';
 
 import { productsService } from '../../services/products.service';
-import { TCreateProductBody } from '../../services/product.model';
+import { ICreateProductBody } from '../../services/product.model';
 import { loggerService } from '../../services/logger.service';
 
-export const createProduct: ValidatedEventAPIGatewayProxyEvent<{ body: TCreateProductBody }> = async (event: { body: any }) => {
+export const createProduct: ValidatedEventAPIGatewayProxyEvent<{ body: ICreateProductBody }> = async (event: { body: any }) => {
     const body = JSON.parse(event.body);
     loggerService.log('lambda -->> createProduct -->> requests and arguments: ', event);
     try {

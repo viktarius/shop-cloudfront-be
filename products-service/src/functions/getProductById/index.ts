@@ -16,7 +16,13 @@ export default {
                     }
                 },
                 summary: "Get product by id",
-                swaggerTags: ['Products']
+                swaggerTags: ['Products'],
+                responseData: {
+                    200: {
+                        description: 'this went well',
+                        bodyType: 'TProduct'
+                    }
+                }
             },
         },
     ],
