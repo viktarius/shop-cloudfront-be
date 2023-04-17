@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getProducts from '@functions/getProducts';
 import getProductById from '@functions/getProductById';
+import createProduct from '@functions/createProduct';
 
 const serverlessConfiguration: AWS = {
   service: 'products-service',
@@ -19,11 +20,28 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
     region: 'us-east-1',
-    profile: "Viktar_Belski",
-    stage: 'v2'
+    profile: 'Viktar_Belski',
+    stage: 'v2',
+    iam: {
+      role: {
+        statements: [{
+          Effect: "Allow",
+          Action: [
+            "dynamodb:DescribeTable",
+            "dynamodb:Query",
+            "dynamodb:Scan",
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+          ],
+          Resource: 'arn:aws:dynamodb:us-east-1:*:*'
+        }]
+      }
+    }
   },
   // import the function via paths
-  functions: { getProducts, getProductById },
+  functions: { getProducts, getProductById, createProduct },
   package: { individually: true },
   custom: {
     documentation: {
@@ -34,6 +52,8 @@ const serverlessConfiguration: AWS = {
     },
     autoswagger:{
       apiType: 'http',
+      generateSwaggerOnDeploy: true,
+      typefiles: ['./src/services/product.model.ts']
     },
     esbuild: {
       bundle: true,

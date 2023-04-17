@@ -1,13 +1,21 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 
-import ProductsService from '../../services/products.service';
+import { productsService } from '../../services/products.service';
+import { loggerService } from '../../services/logger.service';
 
 export const getProductById: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
     const { id } = event.pathParameters;
-    const product = await ProductsService.getItemById(id);
-    if (product) {
-        return formatJSONResponse( product);
+    loggerService.log('lambda -->> getProductById -->> requests and arguments: ', event);
+    try {
+        const result = await productsService.getItemById(id);
+        if (result?.id) {
+            return formatJSONResponse(result);
+        } else {
+            return formatJSONResponse({ message: `Product with id: ${ id } not found!` }, 404);
+        }
+    } catch (e) {
+        loggerService.logError('lambda -->> getProductById', e);
+        return formatJSONResponse({ message: e.message }, 500);
     }
-    return formatJSONResponse({ message: `Product with id: ${id} not found!` }, 404);
 };

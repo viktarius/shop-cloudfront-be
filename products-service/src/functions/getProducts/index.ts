@@ -9,7 +9,13 @@ export default {
                 path: 'products',
                 cors: true,
                 summary: "Get list of products",
-                swaggerTags: ['Products']
+                swaggerTags: ['Products'],
+                responseData: {
+                    200: {
+                        description: 'this went well',
+                        bodyType: 'TProductList'
+                    }
+                }
             },
         },
     ],
