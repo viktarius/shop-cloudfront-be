@@ -6,14 +6,14 @@ const s3 = new S3({ region: 'us-east-1' });
 const BUCKET = 'electronic-lootbox-shop-uploade-storage'
 export const importProductsFile: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
     const fileName = event.queryStringParameters?.name;
-    const catalogPath = `uploaded/${fileName}`;
+    const filePath = `uploaded/${fileName}`;
 
     let statusCode = 200;
     let body = {};
 
     const params = {
         Bucket: BUCKET,
-        Key: catalogPath,
+        Key: filePath,
         Expires: 60,
         ContentType: 'text/csv',
     }
