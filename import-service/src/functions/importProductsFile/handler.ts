@@ -1,31 +1,26 @@
 import { S3 } from 'aws-sdk';
+
 import { formatJSONResponse, ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
+import { Bucket } from '@core/core.helper';
 
-const s3 = new S3({ region: 'us-east-1' });
-
-const BUCKET = 'electronic-lootbox-shop-uploade-storage'
 export const importProductsFile: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
-    const fileName = event.queryStringParameters?.name;
-    const filePath = `uploaded/${fileName}`;
+    const s3 = new S3({ region: 'us-east-1' });
 
-    let statusCode = 200;
-    let body = {};
+    const fileName = event.queryStringParameters?.name;
 
     const params = {
-        Bucket: BUCKET,
-        Key: filePath,
+        Bucket,
+        Key: `uploaded/${fileName}`,
         Expires: 60,
         ContentType: 'text/csv',
     }
 
     try {
-        body = await s3.getSignedUrlPromise('putObject', params);
+        const result = await s3.getSignedUrlPromise('putObject', params);
+        return formatJSONResponse(result, 200);
     } catch (error) {
-        console.error('Error appears: ');
-        console.error(error)
-        statusCode = 500;
-        body = error;
+        console.error('Error appears: ', error);
+        return formatJSONResponse(error, 500);
     }
 
-    return formatJSONResponse(body, statusCode);
 }
