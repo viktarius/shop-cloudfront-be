@@ -1,16 +1,12 @@
-## Task 4 (Integration with NoSQL Database)
+## Task 5 (Integration with S3)
 
 ### Additional (optional) tasks
-- ✔️ +6 (All languages) - POST /products lambda functions returns error 400 status code if product data is invalid
-- ✔️ +6 (All languages) - All lambdas return error 500 status code on any error (DB connection, any unhandled error in code)
-- ✔️ +6 (All languages) - All lambdas do console.log for each incoming requests and their arguments
-- ❌ +6 (All languages) - Use RDS instance instead fo DynamoDB tables. Do not commit your environment variables in serverless.yml to github!
-- ✔️ +6 (All languages) - Transaction based creation of product (in case stock creation is failed then related to this stock product is not created and not ready to be used by the end user and vice versa) (https://devcenter.kinvey.com/nodejs/tutorials/bl-transactional-support, https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transaction-apis.html)
+- ✔️ +10 (for JS only) - async/await is used in lambda functions
+- ✔️ +10 (All languages) - importProductsFile lambda is covered by unit tests. (for JS only) aws-sdk-mock can be used to mock S3 methods
+- ✔️ +10 (All languages) - At the end of the stream the lambda function should move the file from the uploaded folder into the parsed folder (move the file means that file should be copied into a new folder in the same bucket called parsed, and then deleted from uploaded folder)
 
 ### LINKS: 
-- getProducts - https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/products
-- getProductById - https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/products/7567ec4b-b10c-48c5-9345-fc73c48a80a2
-- SWAGGER: https://7d1m2iiap0.execute-api.us-east-1.amazonaws.com/v2/swagger
+- import-service: https://xc7ix433cg.execute-api.us-east-1.amazonaws.com/v2/import
 - FE: https://d17hlkvoaz74v8.cloudfront.net/
 
-### The score: 94 / 100
+### The score: 100 / 100
