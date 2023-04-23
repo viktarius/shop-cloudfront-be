@@ -31,6 +31,10 @@ const serverlessConfiguration: AWS = {
                     Effect: 'Allow',
                     Action: ['s3:*'],
                     Resource: 'arn:aws:s3:::electronic-lootbox-shop-uploade-storage/*'
+                }, {
+                    Effect: "Allow",
+                    Action: ["sqs:*"],
+                    Resource: "arn:aws:sqs:us-east-1:560117584103:catalogItemsQueue"
                 }]
             }
         }
