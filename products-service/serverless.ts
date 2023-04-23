@@ -19,8 +19,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      SQS_URL: {
-        Ref: 'catalogItemsQueue'
+      SNS: {
+        Ref: 'createProductTopic'
       }
     },
     region: 'us-east-1',
@@ -40,6 +40,12 @@ const serverlessConfiguration: AWS = {
             "dynamodb:DeleteItem",
           ],
           Resource: 'arn:aws:dynamodb:us-east-1:*:*'
+        }, {
+          Effect: "Allow",
+          Action: "sns:*",
+          Resource: {
+            Ref: "createProductTopic"
+          }
         }]
       }
     }
@@ -76,6 +82,22 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: 'catalogItemsQueue'
+        }
+      },
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'createProductTopic'
+        }
+      },
+      firstSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'learn.cloud.first@gmail.com',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'createProductTopic'
+          }
         }
       }
     }
