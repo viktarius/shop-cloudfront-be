@@ -99,6 +99,20 @@ const serverlessConfiguration: AWS = {
             Ref: 'createProductTopic'
           }
         }
+      },
+      secondSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'learn.cloud.second@gmail.com',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'createProductTopic'
+          },
+          FilterPolicyScope: 'MessageBody',
+          FilterPolicy: {
+            price: [{ "numeric": [">=", 100] }]
+          }
+        }
       }
     }
   }
