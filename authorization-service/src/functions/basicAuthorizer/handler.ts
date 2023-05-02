@@ -1,5 +1,7 @@
-export const basicAuthorizer = async (event, context, callback) => {
-    if (event?.type !== 'TOKEN') {
+export const basicAuthorizer = async (event, _context, callback) => {
+    console.log(event);
+
+    if (event?.type !== 'REQUEST') {
         callback('Unauthorized')
     }
 
@@ -16,10 +18,8 @@ export const basicAuthorizer = async (event, context, callback) => {
     })
 
     try {
-        const authorizationToken: string = event.authorizationTOken;
-
-        const encodedCreds = authorizationToken.split(' ')[1];
-        const buff = Buffer.from(encodedCreds, 'base64');
+        const authorizationToken: string = event.headers.authorization;
+        const buff = Buffer.from(authorizationToken, 'base64');
         const plainCreds = buff.toString('utf-8').split(':');
         const username = plainCreds[0];
         const password = plainCreds[1];
@@ -28,8 +28,11 @@ export const basicAuthorizer = async (event, context, callback) => {
 
         const storedUserPassword = process.env[username];
         const effect = !storedUserPassword || storedUserPassword !== password ? 'Deny' : 'Allow';
+        console.log('storedUserPassword:::', storedUserPassword);
+        console.log('effect:::', effect);
 
-        const policy = generatePolicy(encodedCreds, event.methodArn, effect);
+
+        const policy = generatePolicy(authorizationToken, event.routeArn, effect);
 
         callback(null, policy);
 
