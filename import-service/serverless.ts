@@ -35,7 +35,21 @@ const serverlessConfiguration: AWS = {
                     Effect: "Allow",
                     Action: ["sqs:*"],
                     Resource: "arn:aws:sqs:us-east-1:560117584103:catalogItemsQueue"
+                },{
+                    Effect: "Allow",
+                    Action: ["execute-api:Invoke"],
+                    Resource: "arn:aws:lambda:us-east-1:560117584103:function:authorization-service-v2-basicAuthorizer"
                 }]
+            }
+        },
+        httpApi: {
+            authorizers: {
+                basicAuthorizer: {
+                    type: 'request',
+                    functionArn: 'arn:aws:lambda:us-east-1:560117584103:function:authorization-service-v2-basicAuthorizer',
+                    identitySource: ['$request.header.Authorization'],
+                    payloadVersion: '2.0'
+                }
             }
         }
     },
