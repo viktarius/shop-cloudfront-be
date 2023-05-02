@@ -19,6 +19,13 @@ const serverlessConfiguration: AWS = {
     region: 'us-east-1',
     profile: 'Viktar_Belski',
     stage: 'v2',
+    httpApi: {
+      cors: {
+        allowedOrigins: ['*'],
+        allowedHeaders: ['*'],
+        allowedMethods: ['*'],
+      }
+    }
   },
   // import the function via paths
   functions: { basicAuthorizer },

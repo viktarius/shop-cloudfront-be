@@ -43,6 +43,11 @@ const serverlessConfiguration: AWS = {
             }
         },
         httpApi: {
+            cors: {
+                allowedOrigins: ['*'],
+                allowedHeaders: ['*'],
+                allowedMethods: ['*'],
+            },
             authorizers: {
                 basicAuthorizer: {
                     type: 'request',

@@ -19,7 +19,9 @@ export const basicAuthorizer = async (event, _context, callback) => {
 
     try {
         const authorizationToken: string = event.headers.authorization;
-        const buff = Buffer.from(authorizationToken, 'base64');
+
+        const encodedCreds = authorizationToken.split(' ')[1];
+        const buff = Buffer.from(encodedCreds, 'base64');
         const plainCreds = buff.toString('utf-8').split(':');
         const username = plainCreds[0];
         const password = plainCreds[1];
@@ -32,10 +34,7 @@ export const basicAuthorizer = async (event, _context, callback) => {
         console.log('effect:::', effect);
 
 
-        const policy = generatePolicy(authorizationToken, event.routeArn, effect);
-
-        callback(null, policy);
-
+        return generatePolicy(encodedCreds, event.routeArn, effect);
     } catch (e) {
         callback(`Unauthorized: ${ e.message }`)
     }

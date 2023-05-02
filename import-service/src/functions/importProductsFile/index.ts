@@ -8,7 +8,9 @@ export default {
                 method: 'get',
                 path: '/import',
                 cors: true,
-                authorizer: 'basicAuthorizer'
+                authorizer: {
+                    name: 'basicAuthorizer'
+                }
             },
         },
     ],
