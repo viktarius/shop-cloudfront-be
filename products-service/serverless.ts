@@ -8,7 +8,7 @@ import catalogBatchProcess from '@functions/catalogBatchProcess';
 const serverlessConfiguration: AWS = {
   service: 'products-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-auto-swagger'],
+  plugins: ['serverless-esbuild', 'serverless-auto-swagger', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
