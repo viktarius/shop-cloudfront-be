@@ -1,13 +1,16 @@
 import { handlerPath } from '@libs/handler-resolver';
 
 export default {
-    handler: `${handlerPath(__dirname)}/handler.importProductsFile`,
+    handler: `${ handlerPath(__dirname) }/handler.importProductsFile`,
     events: [
         {
-            http: {
+            httpApi: {
                 method: 'get',
-                path: 'import',
+                path: '/import',
                 cors: true,
+                authorizer: {
+                    name: 'basicAuthorizer'
+                }
             },
         },
     ],
