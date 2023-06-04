@@ -12,9 +12,9 @@
  - delete cart: DELETE: http://viktarius-cart-api-dev.us-east-1.elasticbeanstalk.com/api/v3/carts/a628049c-2bcb-4f28-81aa-b0a92e85e8e3
 
 #### BFF SERVICE API: 
-- get all carts: GET: http://viktarius-cart-api-dev.us-east-1.elasticbeanstalk.com/api/v3/carts
-- get cart by id: GET: http://viktarius-cart-api-dev.us-east-1.elasticbeanstalk.com/api/v3/carts/a628049c-2bcb-4f28-81aa-b0a92e85e8e3
-- create cart: POST: http://viktarius-cart-api-dev.us-east-1.elasticbeanstalk.com/api/v3/carts
-- delete cart: DELETE: http://viktarius-cart-api-dev.us-east-1.elasticbeanstalk.com/api/v3/carts/a628049c-2bcb-4f28-81aa-b0a92e85e8e3
+- get all carts: GET: http://viktarius-bff-api-dev-1.us-east-1.elasticbeanstalk.com/carts
+- get cart by id: GET: http://viktarius-bff-api-dev-1.us-east-1.elasticbeanstalk.com/carts/a628049c-2bcb-4f28-81aa-b0a92e85e8e3
+- create cart: POST: http://viktarius-bff-api-dev-1.us-east-1.elasticbeanstalk.com/carts
+- delete cart: DELETE: http://viktarius-bff-api-dev-1.us-east-1.elasticbeanstalk.com/carts/a628049c-2bcb-4f28-81aa-b0a92e85e8e3
 
 ### The score: 100 / 100
