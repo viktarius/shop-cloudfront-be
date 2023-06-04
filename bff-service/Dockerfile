@@ -21,7 +21,7 @@ RUN npm install pm2 -g
 COPY --from=base /app/dist ./dist
 
 USER node
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=8081
+EXPOSE 8081
 
 CMD ["pm2-runtime", "dist/main.js"]
