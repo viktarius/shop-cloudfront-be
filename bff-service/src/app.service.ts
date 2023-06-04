@@ -20,8 +20,18 @@ export class AppService {
         throw new HttpException('Invalid service', HttpStatus.BAD_REQUEST);
     }
 
-    public postRequestHandler(service: string) {
+    public postRequestHandler(service: string, body: any) {
+        if(this.API_MAPPER[service]){
+            return this.API_MAPPER[service].postRequestHandler(body);
+        }
+        throw new HttpException('Invalid service', HttpStatus.BAD_REQUEST);
+    }
 
+    public deleteRequestHandler(service: string, query: string): Observable<any> | never {
+        if (this.API_MAPPER[service]) {
+            return this.API_MAPPER[service].deleteRequestHandler(query);
+        }
+        throw new HttpException('Invalid service', HttpStatus.BAD_REQUEST);
     }
 
     getHello(): string {

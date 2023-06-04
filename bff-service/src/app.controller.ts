@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Param, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,9 +11,30 @@ export class AppController {
     }
 
     @Get(':service')
-    requestRedirectHandler(@Param('service') service: string, @Query() query: any) {
+    requestRedirectGetHandler(@Param('service') service: string, @Query() query: any) {
         try {
             return this.appService.getRequestHandler(service, query)
+        } catch (e) {
+            console.log(e)
+            throw new HttpException(e.message, e.status || 500)
+        }
+    }
+
+    @Post(':service')
+    requestRedirectPostHandler(@Param('service') service: string, @Body() body: any) {
+        try {
+            return this.appService.postRequestHandler(service, body)
+        } catch (e) {
+            console.log(e)
+            throw new HttpException(e.message, e.status || 500)
+        }
+    }
+
+
+    @Delete(':service')
+    requestRedirectDeleteHandler(@Param('service') service: string, @Query() query: any) {
+        try {
+            return this.appService.deleteRequestHandler(service, query)
         } catch (e) {
             console.log(e)
             throw new HttpException(e.message, e.status || 500)
